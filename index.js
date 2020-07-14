@@ -17,6 +17,10 @@ app.get("/users", async (req, res) => {
   }
 });
 
+app.post("/users", (req, res) => {
+  console.log("TESTING!");
+});
+
 app.listen(PORT, () => {
   console.log(`Listening on ${PORT}`);
 });
