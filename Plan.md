@@ -25,14 +25,18 @@ Entities
 #### Add relationships (separate migration)
 
 - [ ] Add associations
-- [ ] Like belongsTo Story
-- [ ] Like belongsTo User
+
+1. Write a migration to add the foreign keys
+2. Add the relations to our sequelize models
+
+- [x] Like belongsTo Story -> storyId on likes
+- [x] Like belongsTo User -> userId on likes
 - [ ] Story belongsToMany User
 - [ ] User belongsToMany Story
-- [ ] Profile belongsTo User
+- [ ] Profile belongsTo User -> userId on profile
 - [ ] User hasOne Profile
 - [ ] User hasMany Story
-- [ ] Story belongsTo User
+- [ ] Story belongsTo User -> userId on story
 
 #### Add seed data
 
