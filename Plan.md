@@ -31,12 +31,12 @@ Entities
 
 - [x] Like belongsTo Story -> storyId on likes
 - [x] Like belongsTo User -> userId on likes
-- [ ] Story belongsToMany User
-- [ ] User belongsToMany Story
-- [ ] Profile belongsTo User -> userId on profile
-- [ ] User hasOne Profile
-- [ ] User hasMany Story
-- [ ] Story belongsTo User -> userId on story
+- [x] Story belongsToMany User
+- [x] User belongsToMany Story
+- [x] Profile belongsTo User -> userId on profile
+- [x] User hasOne Profile
+- [x] User hasMany Story
+- [x] Story belongsTo User -> userId on story
 
 #### Add seed data
 
