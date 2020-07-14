@@ -40,6 +40,6 @@ Entities
 
 #### Add seed data
 
-- [ ] Seeds for stories (related data, userId)
-- [ ] Seeds for profiles (realted data, userId)
+- [x] Seeds for stories (related data, userId)
+- [x] Seeds for profiles (realted data, userId)
 - [ ] Seeds for likes (related data, userId, storyId)
