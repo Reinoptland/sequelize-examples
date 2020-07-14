@@ -20,13 +20,13 @@ app.get("/users", async (req, res) => {
   }
 });
 
-app.post("/users", (req, res) => {
+app.post("/users", async (req, res) => {
   console.log("TESTING!");
   console.log(req.body);
-  // predictions
-  // - present
-  // - error! (what kind?)
-  // - json object { unicorn: "present" }
+  const newUser = await User.create(req.body);
+
+  console.log("NEW?", newUser);
+  res.json(newUser);
 });
 
 app.listen(PORT, () => {

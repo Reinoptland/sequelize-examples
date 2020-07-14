@@ -23,6 +23,7 @@ Destroy users
   - route handler (req, res) => {}
   - Query the database (using a sequelize model)
   - test with httpie
+  - send a response
   - catch errors
 - [ ] Create users
   - app.post route
@@ -32,4 +33,5 @@ Destroy users
   - test (console.log(req.body))
   - Insert data into the database using -> Model.create()
   - test (QueryPie / Postico)
+  - send a response
   - catch the errors / validation
