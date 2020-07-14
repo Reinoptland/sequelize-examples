@@ -1,12 +1,17 @@
 const express = require("express");
+const User = require("./models").user;
 
 const app = express();
 
 const PORT = 4000;
 
-app.get("/users", (req, res) => {
+app.get("/users", async (req, res) => {
   console.log("HI! IS THIS WORKING?");
-  res.send("TESTING");
+  const users = await User.findAll();
+
+  console.log("ALL USERS?", users);
+
+  res.json(users);
 });
 
 app.listen(PORT, () => {
