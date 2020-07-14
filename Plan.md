@@ -16,7 +16,7 @@ Entities
 
 #### Profiles
 
-- [ ] Profiles model & Migration
+- [x] Profiles model & Migration
 
 #### Likes
 
