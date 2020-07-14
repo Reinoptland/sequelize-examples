@@ -20,7 +20,7 @@ Entities
 
 #### Likes
 
-- [ ] Likes model & Migration
+- [x] Likes model & Migration
 
 #### Add relationships (separate migration)
 
