@@ -20,13 +20,25 @@ app.get("/users", async (req, res) => {
   }
 });
 
-app.post("/users", async (req, res) => {
-  console.log("TESTING!");
-  console.log(req.body);
-  const newUser = await User.create(req.body);
+app.post("/users", async (req, res, next) => {
+  // Do we have the correct data?
 
-  console.log("NEW?", newUser);
-  res.json(newUser);
+  // Request - Validation
+  if (!req.body.email) {
+    return res.status(400).send({ message: "Please provide a valid email" });
+  }
+  //   console.log("TESTING!");
+  //   console.log(req.body);
+
+  try {
+    const newUser = await User.create(req.body);
+    return res.json(newUser);
+    // console.log("NEW?", newUser);
+  } catch (error) {
+    // next(error);
+    console.log(error);
+    return res.status(500).send({ message: "Something went wrong, sorry" });
+  }
 });
 
 app.listen(PORT, () => {
