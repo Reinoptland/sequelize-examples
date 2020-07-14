@@ -12,7 +12,7 @@ Entities
 
 #### Stories
 
-- [ ] Story model & Migration
+- [x] Story model & Migration
 
 #### Profiles
 
