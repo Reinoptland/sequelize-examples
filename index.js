@@ -35,22 +35,6 @@ app.get("/users", async (req, res, next) => {
   }
 });
 
-const bookIdValidatorMiddleware = (req, res, next) => {
-  if (!Number.isInteger(parseInt(req.params.bookId))) {
-    res.status(400).json({
-      message: "Book ID should be an integer, but was: " + req.params.bookId,
-    });
-  } else {
-    next();
-  }
-};
-
-app.get("/books/:bookId", bookIdValidatorMiddleware, (req, res) => {
-  // to-kill-a-mockingbird -> not valid
-  // integer -> valid
-  res.send("BOOK" + req.params.bookId);
-});
-
 app.post("/users", async (req, res, next) => {
   // Do we have the correct data?
 
