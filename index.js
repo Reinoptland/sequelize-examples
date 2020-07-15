@@ -1,18 +1,29 @@
 const express = require("express");
 const User = require("./models").user;
+const morgan = require("morgan");
 
 const app = express();
 
+// MIDDLEWARE
 // install express.json() middleware so we can read request bodies
+// used to be called body-parser
 app.use(express.json());
+// counts the requests
+app.use(counterMiddleWare);
+app.use(morgan("dev"));
 
 const PORT = 4000;
 
 let requestCount = 0;
 
-app.get("/users", async (req, res) => {
+function counterMiddleWare(req, res, next) {
+  // console.log("MIDDLEWARE EXECUTED");
   requestCount = requestCount + 1;
   console.log("Requests so far:", requestCount);
+  next();
+}
+
+app.get("/users", async (req, res, next) => {
   //   console.log("HI! IS THIS WORKING?");
   try {
     const users = await User.findAll();
@@ -24,9 +35,23 @@ app.get("/users", async (req, res) => {
   }
 });
 
+const bookIdValidatorMiddleware = (req, res, next) => {
+  if (!Number.isInteger(parseInt(req.params.bookId))) {
+    res.status(400).json({
+      message: "Book ID should be an integer, but was: " + req.params.bookId,
+    });
+  } else {
+    next();
+  }
+};
+
+app.get("/books/:bookId", bookIdValidatorMiddleware, (req, res) => {
+  // to-kill-a-mockingbird -> not valid
+  // integer -> valid
+  res.send("BOOK" + req.params.bookId);
+});
+
 app.post("/users", async (req, res, next) => {
-  requestCount = requestCount + 1;
-  console.log("Requests so far:", requestCount);
   // Do we have the correct data?
 
   // Request - Validation
