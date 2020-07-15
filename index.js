@@ -2,8 +2,8 @@ const express = require("express");
 const User = require("./models").user;
 const Profile = require("./models").profile;
 const Story = require("./models").story;
+const Like = require("./models").like;
 const morgan = require("morgan");
-const { response } = require("express");
 
 const app = express();
 
@@ -66,6 +66,17 @@ app.listen(PORT, () => {
   console.log(`Listening on ${PORT}`);
 });
 
+// Make an endpoint to fetch all the stories for a specific user
+
+// Plan:
+// 1. Make a route -> add a parameter (so you know which user's stories we want): userId
+// TEST
+// 2. Database Query -> get the stories / user from the database
+// TEST
+// 3. Send a response -> with the stories
+// TEST
+// 4. Catch the errors / validation
+
 app.get("/users/:userId/stories", async (req, res, next) => {
   // console.log("hi", req.params.userId);
   const userId = req.params.userId;
@@ -88,23 +99,58 @@ app.get("/users/:userId/stories", async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-
-  // alternate way to query stories:
-
-  // const stories = await Story.findAll({
-  //   where: {
-  //     userId: userId,
-  //   },
-  // });
 });
 
-// Make an endpoint to fetch all the stories for a specific user
+// 1. Make an endpoint to update a story
 
-// Plan:
-// 1. Make a route -> add a parameter (so you know which user's stories we want): userId
+// PUT / PATCH -> PUT: replace the entire with my new info, PATCH: update only specific fields
+// 1. Make a PATCH route (app.patch)
 // TEST
-// 2. Database Query -> get the stories / user from the database
+// 2. See if we have the data in the request body
 // TEST
-// 3. Send a response -> with the stories
+// 3. DB query (.update method from the Model)
 // TEST
-// 4. Catch the errors / validation
+// 4. Send a response
+// TEST
+// 5. Error handling/ validation
+
+app.patch("/stories/:storyId", async (req, res, next) => {
+  console.log(req.params);
+  console.log(req.body);
+  try {
+    const story = await Story.findByPk(req.params.storyId);
+
+    if (!story) {
+      return res.status(404).send({ message: "Not found" });
+    }
+
+    console.log(story);
+    story.update(req.body);
+
+    res.json(story);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// 2. Adding a like to a story by a user (many to many)
+
+// 1. Route (POST)
+// 2. Check if we have the data (what data do we need? -> userId, storyId)
+// 3. Do the database query
+// 4. Send a response
+// 5. Handle errors
+
+app.post("/stories/:storyId/likes", async (req, res, next) => {
+  console.log(req.params.storyId, req.body);
+  try {
+    const like = await Like.create({
+      storyId: req.params.storyId,
+      userId: req.body.userId,
+    });
+    res.status(201).json(like);
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+});
