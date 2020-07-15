@@ -8,7 +8,11 @@ app.use(express.json());
 
 const PORT = 4000;
 
+let requestCount = 0;
+
 app.get("/users", async (req, res) => {
+  requestCount = requestCount + 1;
+  console.log("Requests so far:", requestCount);
   //   console.log("HI! IS THIS WORKING?");
   try {
     const users = await User.findAll();
@@ -21,6 +25,8 @@ app.get("/users", async (req, res) => {
 });
 
 app.post("/users", async (req, res, next) => {
+  requestCount = requestCount + 1;
+  console.log("Requests so far:", requestCount);
   // Do we have the correct data?
 
   // Request - Validation
