@@ -3,6 +3,7 @@ const User = require("./models").user;
 const Profile = require("./models").profile;
 const Story = require("./models").story;
 const morgan = require("morgan");
+const { response } = require("express");
 
 const app = express();
 
@@ -65,21 +66,36 @@ app.listen(PORT, () => {
   console.log(`Listening on ${PORT}`);
 });
 
-app.get("/users/:userId/stories", async (req, res) => {
+app.get("/users/:userId/stories", async (req, res, next) => {
   // console.log("hi", req.params.userId);
   const userId = req.params.userId;
-  const user = await User.findByPk(userId, {
-    include: [Story],
-  }); // how we can only the stories from User with id 2?
-  // console.log(user.stories);
+  try {
+    const user = await User.findByPk(userId, {
+      include: [Story],
+    }); // how we can only the stories from User with id 2?
+
+    if (!user) {
+      return res.status(404).send({ message: "Not found" });
+    }
+
+    if (user.stories.length === 0) {
+      return res.status(404).send({
+        message: "This is user does not have anything interesting to say",
+      });
+    }
+
+    return res.json(user.stories);
+  } catch (error) {
+    next(error);
+  }
+
+  // alternate way to query stories:
 
   // const stories = await Story.findAll({
   //   where: {
   //     userId: userId,
   //   },
   // });
-
-  res.json(user.stories);
 });
 
 // Make an endpoint to fetch all the stories for a specific user
