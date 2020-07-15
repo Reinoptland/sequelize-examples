@@ -63,3 +63,18 @@ app.post("/users", async (req, res, next) => {
 app.listen(PORT, () => {
   console.log(`Listening on ${PORT}`);
 });
+
+app.get("/users/:userId/stories", (req, res) => {
+  console.log("hi", req.params.userId);
+});
+
+// Make an endpoint to fetch all the stories for a specific user
+
+// Plan:
+// 1. Make a route -> add a parameter (so you know which user's stories we want): userId
+// TEST
+// 2. Database Query -> get the stories / user from the database
+// TEST
+// 3. Send a response -> with the stories
+// TEST
+// 4. Catch the errors / validation
