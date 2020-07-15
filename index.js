@@ -1,5 +1,6 @@
 const express = require("express");
 const User = require("./models").user;
+const Profile = require("./models").profile;
 const morgan = require("morgan");
 
 const app = express();
@@ -26,11 +27,14 @@ function counterMiddleWare(req, res, next) {
 app.get("/users", async (req, res, next) => {
   //   console.log("HI! IS THIS WORKING?");
   try {
-    const users = await User.findAll();
+    const users = await User.findAll({
+      include: [Profile],
+    });
     // console.log("ALL USERS?", users);
 
     res.json(users);
   } catch (error) {
+    console.log(error);
     res.status(400).send({ message: "Error in getting users, sorry" });
   }
 });

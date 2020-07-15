@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
         through: "likes",
         foreignKey: "userId",
       });
-      user.hasOne(models.profile);
+      user.hasOne(models.profile); // -> User.findAll({ include: [Profile] })
     }
   }
   user.init(

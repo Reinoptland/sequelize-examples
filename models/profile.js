@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      profile.belongsTo(models.user);
+      profile.belongsTo(models.user); // Profile.findAll({ include: [User]})
     }
   }
   profile.init(
